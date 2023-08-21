@@ -2,3 +2,8 @@
 # add rust-src sources using `rustup component add rust-src`
 # cross-compilation of core, since rust std is shipped as a precompiled library (mismatched target triple)
 build-std = ["core", "compiler_builtins"]
+# "polyfils" memory functions, by defaults rustc assumes these are provided by the host c lib
+build-std-features = ["compiler-builtins-mem"]
+
+[build]
+target = "x86_64-crusty-os.json"
