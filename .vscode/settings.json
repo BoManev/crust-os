@@ -1,0 +1,8 @@
+{
+    "rust-analyzer.server.extraEnv": {
+        "RUST_TARGET_PATH": "/home/bo/projects/crusty-os/"
+    },
+    "rust-analyzer.cargo.target": "x86_64-crusty-os.json",
+    "rust-analyzer.check.allTargets": false
+
+}
