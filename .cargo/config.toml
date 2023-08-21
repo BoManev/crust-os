@@ -1,0 +1,4 @@
+[unstable]
+# add rust-src sources using `rustup component add rust-src`
+# cross-compilation of core, since rust std is shipped as a precompiled library (mismatched target triple)
+build-std = ["core", "compiler_builtins"]
