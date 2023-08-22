@@ -1,8 +1,10 @@
+use volatile::Volatile;
+
 pub fn print_s() {
     let mut writer = Writer {
         column: 0,
         color: ColorCode::new(Color::Yellow, Color::Black),
-        buffer: unsafe { &mut *(0xb8000 as *mut Buffer)}
+        buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
     };
 
     writer.write_byte(b'H');
@@ -32,7 +34,7 @@ const BUFFER_WIDTH: usize = 80;
 
 #[repr(transparent)]
 struct Buffer {
-    chars: [[ScreenChar; BUFFER_WIDTH]; BUFFER_HEIGHT],
+    chars: [[Volatile<ScreenChar>; BUFFER_WIDTH]; BUFFER_HEIGHT],
 }
 
 pub struct Writer {
@@ -63,7 +65,7 @@ impl Writer {
                 let row = BUFFER_HEIGHT - 1;
                 let col = self.column;
                 let color = self.color;
-                self.buffer.chars[row][col] = ScreenChar { ascii: byte, color };
+                self.buffer.chars[row][col].write(ScreenChar { ascii: byte, color });
                 self.column += 1;
             }
         }
