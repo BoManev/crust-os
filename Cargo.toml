@@ -4,3 +4,7 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
+# compile kernel, then compile bootloader, finally link them together
+# into a bootable image. Note: Cargo doesn't have post-build scripts
+# use `cargo install bootimage` tool
+bootloader = "0.9.23"
