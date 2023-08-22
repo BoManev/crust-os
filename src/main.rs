@@ -11,7 +11,7 @@ use core::panic::PanicInfo;
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
     print!("Hello World{}", "!");
-    
+
     #[cfg(test)]
     test_main();
     loop {}
@@ -29,6 +29,8 @@ fn test_runner(tests: &[&dyn Fn()]) {
     for test in tests {
         test();
     }
+
+    exit_qemu(QemuExitCode::Success);
 }
 
 #[test_case]
@@ -36,4 +38,20 @@ fn trivial_assertion() {
     print!("trivial assertion...");
     assert_eq!(1, 1);
     println!("[ok]")
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(u32)] // iobase=0x04
+pub enum QemuExitCode {
+    Success = 0x10,
+    Failed = 0x11,
+}
+
+pub fn exit_qemu(code: QemuExitCode) {
+    use x86_64::instructions::port::Port;
+
+    unsafe {
+        let mut port = Port::new(0xf4);
+        port.write(code as u32);
+    }
 }
