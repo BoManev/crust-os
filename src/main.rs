@@ -3,12 +3,13 @@
 
 mod vgabuf;
 
+use core::fmt::Write;
 use core::panic::PanicInfo;
-use vgabuf::print_s;
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    print_s();
+    vgabuf::WRITER.lock().write_str("Hello World");
+    write!(vgabuf::WRITER.lock(), "format: 127.0.0.1:{}", 8000).unwrap();
     loop {}
 }
 
