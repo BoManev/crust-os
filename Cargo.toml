@@ -23,6 +23,11 @@ test-args = [
     "-display",
     "none"
 ]
-# remaps exit codes from qemu to cargo
+# remaps exit codes from qemu (via isa-debug-exit) to cargo
 test-success-exit-code = 33 # (0x10 << 1) | 1
 test-timeout = 300
+
+
+[[test]]
+name = "should_panic"
+harness = false
