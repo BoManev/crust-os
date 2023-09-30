@@ -19,3 +19,8 @@ extern "x86-interrupt" fn handle_breakpoint(
 ) {
     println!("Expection: BREAKPOINT\n\t{:#?}", stack_frame);
 }
+
+#[test_case]
+fn test_breakpoint_interrupt() {
+    x86_64::instructions::interrupts::int3();
+}

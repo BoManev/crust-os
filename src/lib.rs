@@ -16,9 +16,11 @@ pub fn init() {
 }
 
 // entry point for `cargo test`
+// Note: used by `cargo test --lib`
 #[cfg(test)]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
+    init();
     test_main();
     loop {}
 }
