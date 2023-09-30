@@ -7,11 +7,13 @@
 
 pub mod serial;
 pub mod vgabuf;
+pub mod descriptors;
 pub mod interrupts;
 
 use core::panic::PanicInfo;
 
 pub fn init() {
+    descriptors::init();
     interrupts::init_idt();
 }
 
